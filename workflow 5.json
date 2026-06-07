@@ -1,0 +1,577 @@
+{
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "-admin",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1952,
+        -960
+      ],
+      "id": "27c542b3-a8ee-4c59-81ca-306486bf2b7c",
+      "name": "Webhook",
+      "webhookId": "6c7e4eb3-fb11-4da6-97ed-d6ccfc51eee1"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"success\",\n  \"request_id\": \"={{$json.request_id}}\",\n  \"message\": \"Data processed successfully\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        800,
+        -400
+      ],
+      "id": "02ba21cc-22a7-42ba-97c4-30e917d4b221",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        480
+      ],
+      "id": "173bff7f-18dd-4e42-81ab-b88dd380cf9a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        336,
+        -272
+      ],
+      "id": "6fec160f-7ab1-42d6-a7cf-1a021ef1b451",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b0b48555-7cee-4edc-81ab-e3ec1438d7b7",
+              "leftValue": "={{ $json.gender }}",
+              "rightValue": "Male",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "90c54af8-8f9b-475b-9e1a-c6bdca8c3157",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -992,
+        -368
+      ],
+      "id": "816802ae-639d-4b2d-92a3-1ca2c3947dc0",
+      "name": "is n8n automation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a76a17ed-712b-4cd2-a817-2e3daae87ff5",
+              "name": "isFalse",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -592,
+        -192
+      ],
+      "id": "c8a301dd-9b8c-4275-8569-d24064e07cd7",
+      "name": "isFalse"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        -336
+      ],
+      "id": "3dc9b521-28e1-4185-9b2e-993deabf3ed5",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ea9d9727-c76f-41ff-86da-ddfb168425b3",
+              "name": "isTrue",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -592,
+        -544
+      ],
+      "id": "2e3130c3-70e3-4169-8b8a-6ed9bfe3bdf0",
+      "name": "isTrue"
+    },
+    {
+      "parameters": {
+        "sendTo": "wanjiruvictorian@gmail.com",
+        "subject": "Attachment",
+        "message": "=<h1 style=\"color:green;\">📊 Database Report Generated</h1>  <p>Hello,</p>  <p>Your PostgreSQL dataset has been successfully processed and exported.</p>  <hr>  <h3>📌 Summary</h3> <ul>   <li>Status: SUCCESS</li>   <li>Total Records: 1,250</li>   <li>Generated At: {{$now}}</li> </ul>  <hr>  <h3>📎 Attachment</h3> <p>Your full dataset is attached as <b>report.csv</b></p>  <br>  <p>Regards,<br><b>n8n Automation System</b></p>",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          },
+          "bccList": "sylvesterojwang20@gmail.com"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "8bd54e4a-e347-46f4-9280-d780fcb7601d",
+      "name": "Send a message",
+      "webhookId": "c1bceb4f-be88-4ed6-ba28-2005cf5a9109",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QVv8ZPExoW8EeGaE",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select  id, first_name,last_name,email,gender, price,sum(price) OVER( ORDER by id)as cummulative_amount from inspirational;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -960,
+        -768
+      ],
+      "id": "61d4ba90-66d6-407a-a05d-38a274f6302a",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "postgres": {
+          "id": "sDbdkYdKviZmbO6K",
+          "name": "Postgres account 5"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1200,
+        -896
+      ],
+      "id": "09720b9c-1ebe-4358-aa1f-8e0efca9af45",
+      "name": "Wait",
+      "webhookId": "d4ecbe12-3b8c-40ce-a4af-380aa0d6d2c4"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1KxIGvhJPJzIxETJCuC-8gFoYRqy5sQa0tZFvbla0yNs",
+          "mode": "list",
+          "cachedResultName": "Database1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KxIGvhJPJzIxETJCuC-8gFoYRqy5sQa0tZFvbla0yNs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KxIGvhJPJzIxETJCuC-8gFoYRqy5sQa0tZFvbla0yNs/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Column 1": "={{ $json.id }}",
+            "Column 2": "={{ $json.first_name }}",
+            "Column 3": "={{ $json.last_name }}",
+            "Column 4": "={{ $json.email }}",
+            "Column 5": "={{ $json.gender }}",
+            "Column 6": "={{ $json.price }}",
+            "Column 7": "={{ $json.tax_rate }}",
+            "Column 8": "={{ $json.checked_in_at }}"
+          },
+          "matchingColumns": [
+            "Column 1"
+          ],
+          "schema": [
+            {
+              "id": "Column 1",
+              "displayName": "Column 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Column 2",
+              "displayName": "Column 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Column 3",
+              "displayName": "Column 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Column 4",
+              "displayName": "Column 4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Column 5",
+              "displayName": "Column 5",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Column 6",
+              "displayName": "Column 6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Column 7",
+              "displayName": "Column 7",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Column 8",
+              "displayName": "Column 8",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        64,
+        -640
+      ],
+      "id": "45343e3b-345a-4ca1-bcd4-3247df0ea38d",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CODfXBFwksZLrKX8",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "1KxIGvhJPJzIxETJCuC-8gFoYRqy5sQa0tZFvbla0yNs",
+          "mode": "list",
+          "cachedResultName": "Database1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KxIGvhJPJzIxETJCuC-8gFoYRqy5sQa0tZFvbla0yNs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KxIGvhJPJzIxETJCuC-8gFoYRqy5sQa0tZFvbla0yNs/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1552,
+        -608
+      ],
+      "id": "4afae564-b4de-43f9-b75a-d43570e1b174",
+      "name": "Clear sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CODfXBFwksZLrKX8",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "content-type": "application/json",
+            "user-agent": "PostmanRuntime/7.54.0",
+            "accept": "*/*",
+            "postman-token": "dbd4d517-998e-4c0d-9a2a-e0b22a26d8b9",
+            "host": "localhost:5678",
+            "accept-encoding": "gzip, deflate, br",
+            "connection": "keep-alive",
+            "content-length": "78"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "first_name": "John",
+            "last_name": "Kamau",
+            "class": "Form 2"
+          },
+          "webhookUrl": "http://localhost:5678/webhook-test/-admin",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Clear sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "is n8n automation": {
+      "main": [
+        [
+          {
+            "node": "isTrue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "isFalse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "isFalse": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "isTrue": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "is n8n automation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clear sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "db76c064-0f69-409a-a20c-31828c3b0e4c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f8b9cd07a205c299d14739032f74f2b68f90ac36764934f53b320309e2db9241"
+  },
+  "id": "CNgHhtlTZB9Flxpi",
+  "tags": []
+}
